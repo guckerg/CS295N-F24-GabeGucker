@@ -1,6 +1,6 @@
 # ASP.NET Project
 
-This project is built with ASP.NET and does [brief description].
+This project is built with ASP.NET showcasing an information website.
 
 ## Prerequisites
 
