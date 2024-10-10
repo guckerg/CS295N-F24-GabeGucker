@@ -23,6 +23,11 @@ namespace GGinfoSite.Controllers
             return View();
         }
 
+        public IActionResult MoreInfo()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
