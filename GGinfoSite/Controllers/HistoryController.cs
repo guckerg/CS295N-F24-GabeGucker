@@ -2,14 +2,9 @@
 
 namespace GGinfoSite.Controllers
 {
-    public class About : Controller
+    public class HistoryController : Controller
     {
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Links()
         {
             return View();
         }

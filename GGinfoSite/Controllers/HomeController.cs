@@ -23,7 +23,12 @@ namespace GGinfoSite.Controllers
             return View();
         }
 
-        public IActionResult MoreInfo()
+        public IActionResult Overview()
+        {
+            return View();
+        }
+
+        public IActionResult References()
         {
             return View();
         }
