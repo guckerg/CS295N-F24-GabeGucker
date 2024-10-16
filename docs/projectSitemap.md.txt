@@ -1,0 +1,20 @@
+# Project Sitemap
+
+## Home
+- General information about the topic and the purpose of the site.
+- Links to [Blog](#blog), [Creative Corner](#creative-corner), and sub-pages below:
+  - [Overview](#overview)
+  - [References](#references)
+
+## Overview
+- A brief description of the topic.
+
+## References
+- Sources of information in print or online.
+
+## Blog
+- A page where blog posts will appear.
+- Placeholder page for links to top posts.
+- [About the Author](#about-the-author)
+
+## Creative Corner
