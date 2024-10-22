@@ -1,8 +1,20 @@
-﻿@{
+﻿@model BlogPost
+@{
     ViewData["Title"] = "Top Posts";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Top Posts</h1>
-    <p>This page will host the most popular articles on coffee</p>
-</div>
+<form method="post">
+    <label for="title">Post Title</label>
+    <input id="title" name="PostTitle" /><br />
+
+    <label for="text">Post Content</label>
+    <textarea id="text" name="PostText"></textarea><br />
+
+    <label for="poster">Blog Poster</label>
+    <input id="poster" name="Poster.Name" /><br />
+
+    <label for="rating">Rating</label>
+    <input id="rating" name="PostRating" /><br />
+
+    <button type="submit">Submit</button>
+</form>
