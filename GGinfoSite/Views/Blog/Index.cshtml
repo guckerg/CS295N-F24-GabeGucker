@@ -1,14 +1,24 @@
-﻿@{
+﻿@model BlogPost
+@{
     ViewData["Title"] = "Blog";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Blog Page</h1>
-    <p>This is where you can read posts about coffee</p>
+    <h1 class="display-4">Top Posts</h1>
 </div>
-
-<h2>Menu</h2>
-<ul>
-    <li><a href="Blog/TopPosts">Placeholder for top posts navigation.</a></li>
-    <li><a href="Blog/About">Learn more about this blog author</a></li>
-</ul>
+<h2>Most Recent Blog Post</h2>
+@if (Model.PostText != null)
+{
+    <p>
+        Title: @Model.PostTitle<br />
+        Blog Post Author: @Model.Poster<br />
+        Post: @Model.PostText<br />
+        Rating: @Model.PostRating<br />
+        Post Date: @Model.PostTime
+    </p>
+}
+else
+{
+    <p>There are no blog posts right now.</p>
+}
+<a href="Blog/TopPosts">Create a New Blog Post</a>

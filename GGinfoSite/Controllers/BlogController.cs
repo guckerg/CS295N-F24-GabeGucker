@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using GGinfoSite.Models;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 namespace GGinfoSite.Controllers
 {
@@ -6,7 +8,9 @@ namespace GGinfoSite.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            BlogPost model = new BlogPost();
+            model.Poster = new AppUser();
+            return View(model);
         }
 
         public IActionResult About()
@@ -17,6 +21,13 @@ namespace GGinfoSite.Controllers
         public IActionResult TopPosts()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult TopPosts(BlogPost model)
+        {
+            model.PostTime = DateTime.Now;
+            return View("Index", model);
         }
     }
 }
