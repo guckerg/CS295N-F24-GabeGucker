@@ -9,5 +9,14 @@ namespace GGinfoSite.Models
         public string? PostText { get; set; }
         public DateTime PostTime { get; set; }
         public int PostRating { get; set; }
+
+        public BlogPost()
+        {
+            PostTitle = "Default Title";
+            PostText = "Default Text";
+            PostRating = 0;
+            PostTime = DateTime.Now;
+            Poster = new AppUser { Name = "unknown" };
+        }
     }
 }
