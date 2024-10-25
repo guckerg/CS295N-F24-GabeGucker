@@ -7,11 +7,11 @@
     <h1 class="display-4">Top Posts</h1>
 </div>
 <h2>Most Recent Blog Post</h2>
-@if (Model.PostText != null)
+@if (Model.PostText != null && Model.PostText != "Default Text")
 {
     <p>
         Title: @Model.PostTitle<br />
-        Blog Post Author: @Model.Poster<br />
+        Blog Post Author: @Model.Poster.Name<br />
         Post: @Model.PostText<br />
         Rating: @Model.PostRating<br />
         Post Date: @Model.PostTime
