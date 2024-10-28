@@ -18,13 +18,13 @@ namespace GGinfoSite.Controllers
             return View();
         }
 
-        public IActionResult TopPosts()
+        public IActionResult BlogPost()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult TopPosts(BlogPost model)
+        public IActionResult BlogPost(BlogPost model)
         {
             model.PostTime = DateTime.Now;
             return View("Index", model);
