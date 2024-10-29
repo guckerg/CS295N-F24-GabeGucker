@@ -3,18 +3,43 @@
     ViewData["Title"] = "Blog Post";
 }
 
-<form method="post">
-    <label for="title">Post Title</label>
-    <input id="title" name="PostTitle" /><br />
+<div class="container">
+    <div class="row">
+        <h1 class="col-md-12 text-center">Add Post to Blog</h1><br />
+    </div>
+</div>
 
-    <label for="text">Post Content</label>
-    <textarea id="text" name="PostText"></textarea><br />
+<form method="post" class="container">
+    <div class="row">
+        <label for="title" class="control-label col-md-2">Post Title</label>
+        <div class="col-md-10">
+            <input id="title" name="PostTitle" class="form-control col-md-10" /><br />
+        </div>
+    </div>
 
-    <label for="poster">Blog Poster</label>
-    <input id="poster" name="Poster.Name" /><br />
+    <div class="row">
+        <label for="text" class="control-label col-md-2">Post Content</label>
+        <div class="col-md-10">
+            <textarea id="text" name="PostText" class="form-control col-md-8"></textarea><br />
+        </div>
+        
+    </div>
 
-    <label for="rating">Rating</label>
-    <input id="rating" name="PostRating" /><br />
+    <div class="row">
+        <label for="poster" class="control-label col-md-2">Blog Poster</label>
+        <div class="col-md-10">
+            <input id="poster" name="Poster.Name" class="form-control col-md-8" /><br />
+        </div>
+    </div>
 
-    <button type="submit">Submit</button>
+    <div class="row">
+        <label for="rating" class="control-label col-md-2">Rating</label>
+        <div class="col-md-10">
+            <input id="rating" name="PostRating" class="form-control col-md-8" /><br />
+        </div>
+    </div>
+
+    <div class="row">
+        <button type="submit" class="btn btn-primary col-md-2 mx-auto">Submit</button>
+    </div>
 </form>

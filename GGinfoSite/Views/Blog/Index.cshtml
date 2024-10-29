@@ -6,19 +6,32 @@
 <div class="text-center">
     <h1 class="display-4">Top Posts</h1>
 </div>
-<h2>Most Recent Blog Post</h2>
-@if (Model.PostText != null && Model.PostText != "Default Text")
-{
-    <p>
-        Title: @Model.PostTitle<br />
-        Blog Post Author: @Model.Poster.Name<br />
-        Post: @Model.PostText<br />
-        Rating: @Model.PostRating<br />
-        Post Date: @Model.PostTime
-    </p>
-}
-else
-{
-    <p>There are no blog posts right now.</p>
-}
-<a href="/Blog/BlogPost">Create a New Blog Post</a>
+<h3 class="text-center">Most Recent Blog Post</h3>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            @if (Model.PostText != null && Model.PostText != "Default Text")
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Title: @Model.PostTitle<br /></h5>
+                        <p class="card-text">
+                            <strong>Blog Post Author:</strong> @Model.Poster.Name<br />
+                            <strong>Post:</strong> @Model.PostText <br />
+                            <strong>Rating:</strong> @Model.PostRating <br />
+                            <strong>Post Date:</strong> @Model.PostTime
+                        </p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p class="text-center">There are no blog posts right now.</p>
+            }
+            <br/>
+            <div class="row">
+                <a class="btn btn-primary col-md-2 mx-auto" href="/Blog/BlogPost">Create Post</a>
+            </div>
+        </div>
+    </div>
+</div>
