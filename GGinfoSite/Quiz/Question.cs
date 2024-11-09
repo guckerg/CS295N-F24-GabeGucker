@@ -1,4 +1,4 @@
-﻿namespace GGinfoSite.Quiz
+﻿namespace GGinfoSite.CafeQuiz
 {
     public class Question
     {
@@ -10,5 +10,8 @@
 
         //user's asnwer to quiz question
         public string UserA { get; set; }
+
+        //store if answer is correct
+        public bool isRight {  get; set; }
     }
 }

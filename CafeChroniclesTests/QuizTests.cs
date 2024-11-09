@@ -1,4 +1,4 @@
-using GGinfoSite.Quiz;
+using GGinfoSite.CafeQuiz;
 
 namespace CafeChroniclesTests
 {
