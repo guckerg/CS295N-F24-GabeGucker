@@ -1,0 +1,16 @@
+﻿@model Quiz
+
+<form method="post">
+
+    @foreach (Question question in Model.Questions)
+    {
+        <p>@question.Q</p>
+        <input name="answers" value="@question.UserA" />
+        @if (question.UserA != "" && question.UserA != null)
+        {
+            @(question.isRight ? "Right" : "Wrong")
+            ;
+        } <br />
+    }
+    <input type="submit" />
+</form>
