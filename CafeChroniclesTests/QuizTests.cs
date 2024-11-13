@@ -4,50 +4,51 @@ namespace CafeChroniclesTests
 {
     public class QuizTests
     {
-        Quiz quiz = new Quiz();
-        public QuizTests()
+        Quiz _testQuiz = new Quiz();
+
+        [Fact]
+        public void CheckCorrectAnswer()
         {
+            //Arrange - Set up in constructor
             Question q1 = new Question()
             {
-                Q = "What is Gabe's favorite coffee?",
+                Q = "What is Gabe's favorite espresso roast?",
                 A = "Angel Wing",
                 UserA = "Angel Wing"
             };
+            _testQuiz.Questions.Add(q1);
+
+            // Act
+            bool isCorrect = _testQuiz.CheckAnswer(_testQuiz.Questions.Last());
+
+            //Assert
+            Assert.True(isCorrect);
+        }
+
+        [Fact]
+        public void CheckWrongAnswer()
+        {
+            //Arrange
             Question q2 = new Question()
             {
-                Q = "What is Gabe's favorite coffee?",
+                Q = "What is Gabe's favorite espresso roast?",
                 A = "Angel Wing",
-                UserA = "Humbler"
+                UserA = "Ghost Rider"
             };
-            quiz.Questions.Add(q1);
-            quiz.Questions.Add(q2);
+            _testQuiz.Questions.Add(q2);
+
+            // Act
+            bool isCorrect = _testQuiz.CheckAnswer(_testQuiz.Questions.Last());
+
+            //Assert
+            Assert.False(isCorrect);
         }
 
         [Fact]
-        public void checkCorrectAnswer()
+        public void CheckNumberQuestions()
         {
-            //Arrange - Set up in constructor
-            //Act - executed in assert
-            //Assert
-            Assert.True(quiz.checkAnswer(quiz.Questions[0]));
-        }
-
-        [Fact]
-        public void checkWrongAnswer()
-        {
-            //Arrange - Set up in constructor
-            //Act - executed in assert
-            //Assert
-            Assert.False(quiz.checkAnswer(quiz.Questions[1]));
-        }
-
-        [Fact]
-        public void checkNumberQuestions()
-        {
-            //Arrange - Set up in constructor
-            //Act - executed in assert
-            //Assert
-            Assert.Equal(2, quiz.Questions.Count());
+            //Counts number of questions initialized in Quiz.cs, not testing exclusive questions
+            Assert.Equal(8, _testQuiz.Questions.Count());
         }
     }
 }

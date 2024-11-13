@@ -52,7 +52,7 @@ namespace GGinfoSite.Controllers
                 {
                     Question q1 = model.Questions[i];
                     q1.UserA = answer;
-                    q1.isRight = model.checkAnswer(q1);
+                    q1.isRight = model.CheckAnswer(q1);
                 }
             }
 
