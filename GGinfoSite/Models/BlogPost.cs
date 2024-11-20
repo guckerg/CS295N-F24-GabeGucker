@@ -4,6 +4,7 @@ namespace GGinfoSite.Models
 {
     public class BlogPost
     {
+        public int BlogPostID { get; set; }
         public AppUser? Poster { get; set; }
         public string? PostTitle { get; set; }
         public string? PostText { get; set; }
