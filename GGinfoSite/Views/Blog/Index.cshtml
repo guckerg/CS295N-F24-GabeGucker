@@ -1,4 +1,4 @@
-﻿@model BlogPost
+﻿@model List<BlogPost>
 @{
     ViewData["Title"] = "Top Posts";
 }
@@ -10,19 +10,22 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            @if (Model.PostText != null && Model.PostText != "Default Text")
+            @if (Model.Count != 0)
             {
-                <div class="card p-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Title: @Model.PostTitle<br /></h5>
-                        <p class="card-text">
-                            <strong>Blog Post Author:</strong> @Model.Poster.Name<br />
-                            <strong>Post:</strong> @Model.PostText <br />
-                            <strong>Rating:</strong> @Model.PostRating <br />
-                            <strong>Post Date:</strong> @Model.PostTime
-                        </p>
+                foreach (BlogPost blogPost in Model)
+                {
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Title: @blogPost.PostTitle<br /></h5>
+                            <p class="card-text">
+                                <strong>BlogPost Author:</strong> @blogPost.Poster<br />
+                                <strong>Post:</strong> @blogPost.PostText <br />
+                                <strong>Rating:</strong> @blogPost.PostRating <br />
+                                <strong>Post Date:</strong> @blogPost.PostTime
+                            </p>
+                        </div>
                     </div>
-                </div>
+                }
             }
             else
             {

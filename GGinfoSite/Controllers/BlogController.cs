@@ -1,16 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GGinfoSite.Data;
 using GGinfoSite.Models;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GGinfoSite.Controllers
 {
     public class BlogController : Controller
     {
+        //private instance variable
+        IBlogPostRepository repo;
+
+        //constructor
+        public BlogController(IBlogPostRepository r)
+        {
+            repo = r;
+        }
+        
         public IActionResult Index()
         {
-            BlogPost model = new BlogPost();
-            model.Poster = new AppUser();
-            return View(model);
+           var blogPosts = repo.GetBlogPosts();
+            return View(blogPosts);
         }
 
         public IActionResult About()
@@ -26,8 +34,16 @@ namespace GGinfoSite.Controllers
         [HttpPost]
         public IActionResult BlogPost(BlogPost model)
         {
-            model.PostTime = DateTime.Now;
-            return View("Index", model);
+            model.PostTime = DateTime.Now;  // Add date and time to the model
+            if (repo.StoreBlogPost(model) > 0)
+            {
+                return RedirectToAction("Index", new { blogPostID = model.BlogPostID });
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "There was an error saving the Blog Post.";
+                return View();
+            }
         }
     }
 }
