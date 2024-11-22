@@ -3,26 +3,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GGinfoSite.Data
 {
-    public interface BlogPostRepository : IBlogPostRepository
+    public class BlogPostRepository : IBlogPostRepository
     {
-        private ApplicationDbContext context;
+        private ApplicationDbContext _context;
 
         public BlogPostRepository(ApplicationDbContext appDbContext)
         {
-            context = appDbContext;
+            _context = appDbContext;
         }
 
-        public List<BlogPost> GetAllBlogPosts()
+        public List<BlogPost> GetBlogPosts()
         {
-            var blogPost = context.BlogPost
+            var blogPosts = _context.BlogPost
               .Include(blogPost => blogPost.Poster) // returns BlogPost.AppUser object
               .ToList<BlogPost>();
-            return blogPost;
+            return blogPosts;
         }
 
         public BlogPost GetBlogPostById(int id)
         {
-            var blogPost = context.BlogPost
+            var blogPost = _context.BlogPost
               .Include(blogPost => blogPost.Poster) // returns Reivew.AppUser object
               .Where(blogPost => blogPost.BlogPostID == id)
               .SingleOrDefault();
@@ -32,8 +32,8 @@ namespace GGinfoSite.Data
         public int StoreBlogPost(BlogPost model)
         {
             model.PostTime = DateTime.Now;
-            context.BlogPost.Add(model);
-            return context.SaveChanges();
+            _context.BlogPost.Add(model);
+            return _context.SaveChanges();
             // returns a positive value if succussful
         }
     }
