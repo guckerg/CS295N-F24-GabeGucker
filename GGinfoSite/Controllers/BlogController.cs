@@ -1,16 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GGinfoSite.Models;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using GGinfoSite.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace GGinfoSite.Controllers
 {
     public class BlogController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public BlogController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
-            BlogPost model = new BlogPost();
-            model.Poster = new AppUser();
-            return View(model);
+            List<BlogPost> blogPosts = _context.BlogPost.Include(bp => bp.Poster).ToList();
+            return View(blogPosts);
         }
 
         public IActionResult About()
