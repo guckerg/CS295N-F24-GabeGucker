@@ -1,5 +1,6 @@
 using GGinfoSite.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,5 +38,12 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider
+                         .GetRequiredService<ApplicationDbContext>();
+    SeedData.Seed(dbContext);
+}
 
 app.Run();
