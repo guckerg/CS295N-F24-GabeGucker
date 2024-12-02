@@ -17,8 +17,16 @@ namespace GGinfoSite.Controllers
         
         public IActionResult Index()
         {
-           var blogPosts = repo.GetBlogPosts();
+            var blogPosts = repo.GetBlogPosts();
             return View(blogPosts);
+        }
+
+        public IActionResult Filter(string poster, string date)
+        {
+            var blogPosts = repo.GetBlogPosts()
+                .Where(b => b.Poster.Name == poster || poster == null)
+                .ToList();
+            return View("Index", blogPosts);
         }
 
         public IActionResult About()
@@ -34,7 +42,7 @@ namespace GGinfoSite.Controllers
         [HttpPost]
         public IActionResult BlogPost(BlogPost model)
         {
-            model.PostTime = DateTime.Now;  // Add date and time to the model
+            model.PostTime = DateTime.Now;
             if (repo.StoreBlogPost(model) > 0)
             {
                 return RedirectToAction("Index", new { blogPostID = model.BlogPostID });

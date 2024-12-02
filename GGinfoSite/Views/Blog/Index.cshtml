@@ -6,6 +6,16 @@
 <div class="text-center">
     <h1 class="display-4">Top Posts</h1>
 </div>
+
+Filter through existing blog posts:
+<form method="post" action="/Blog/Filter">
+    <label name="poster">Author</label><br />
+    <input name="poster" /><br />
+    <label name="date">Date</label><br />
+    <input name="date" /><br />
+    <button type="submit">Submit</button>
+</form>
+
 <h3 class="text-center">Most Recent Blog Post</h3>
 <div class="container">
     <div class="row justify-content-center">
