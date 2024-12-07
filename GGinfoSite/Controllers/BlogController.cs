@@ -1,22 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using GGinfoSite.Models;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 using GGinfoSite.Data;
-using Microsoft.EntityFrameworkCore;
+using GGinfoSite.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GGinfoSite.Controllers
 {
     public class BlogController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        //private instance variable
+        IBlogPostRepository repo;
 
-        public BlogController(ApplicationDbContext context)
+        //constructor
+        public BlogController(IBlogPostRepository r)
         {
-            _context = context;
+            repo = r;
         }
+        
         public IActionResult Index()
         {
-            List<BlogPost> blogPosts = _context.BlogPost.Include(bp => bp.Poster).ToList();
+           var blogPosts = repo.GetBlogPosts();
             return View(blogPosts);
         }
 
@@ -33,8 +34,16 @@ namespace GGinfoSite.Controllers
         [HttpPost]
         public IActionResult BlogPost(BlogPost model)
         {
-            model.PostTime = DateTime.Now;
-            return View("Index", model);
+            model.PostTime = DateTime.Now;  // Add date and time to the model
+            if (repo.StoreBlogPost(model) > 0)
+            {
+                return RedirectToAction("Index", new { blogPostID = model.BlogPostID });
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "There was an error saving the Blog Post.";
+                return View();
+            }
         }
     }
 }
