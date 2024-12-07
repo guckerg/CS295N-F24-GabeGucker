@@ -397,3 +397,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /GGinfoSite/appsettings.Development.json
+/GGinfoSite/appsettings.Production.json
+/docs/Brainstorm CS295N Term Project Idea.txt
