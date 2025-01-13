@@ -1,4 +1,6 @@
 using GGinfoSite.Data;
+using GGinfoSite.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -17,6 +19,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //establishes repository
 builder.Services.AddTransient<IBlogPostRepository, BlogPostRepository>();
 
+//identity prerequisites
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
 var app = builder.Build();
 
 
@@ -34,6 +41,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
