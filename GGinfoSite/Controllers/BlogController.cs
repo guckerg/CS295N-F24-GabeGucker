@@ -1,4 +1,4 @@
-﻿using GGinfoSite.Data;
+using GGinfoSite.Data;
 using GGinfoSite.Models;
 using Microsoft.AspNetCore.Mvc;
 
