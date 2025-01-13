@@ -4,12 +4,16 @@
 
 <div class="text-center">
     <h1 class="display-4">Cafe Chronicles</h1>
-    <p>Lots more coming about coffee</p>
 </div>
-
-<div class="text-center">
-    <h2>Navigation</h2>
-    <a href="Home/Overview">Overview</a><br/>
-    <a href="Home/References">References</a><br/>
-    <a href="Home/Quiz">Coffee Trivia</a>
-</div>
+<body>
+    <div class="container mt-5">
+        <div class="text-center">
+            <button type="button" class="btn btn-primary btn-lg btn-block mb-3" 
+            onclick="location.href='@Url.Action("Overview","Home")';">Overview</button><br>
+            <button type="button" class="btn btn-primary btn-lg btn-block mb-3" 
+            onclick="location.href='@Url.Action("References","Home")';">References</button><br>
+            <button type="button" class="btn btn-primary btn-lg btn-block mb-3" 
+            onclick="location.href='@Url.Action("Quiz","Home")';">Coffee Trivia!</button>
+        </div>
+    </div>
+</body>

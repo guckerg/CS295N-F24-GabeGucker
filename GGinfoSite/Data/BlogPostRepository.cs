@@ -15,7 +15,7 @@ namespace GGinfoSite.Data
         public List<BlogPost> GetBlogPosts()
         {
             var blogPosts = _context.BlogPost
-              .Include(blogPost => blogPost.Poster) // returns BlogPost.AppUser object
+              .Include(blogPost => blogPost.Poster)
               .ToList<BlogPost>();
             return blogPosts;
         }
@@ -23,7 +23,7 @@ namespace GGinfoSite.Data
         public BlogPost GetBlogPostById(int id)
         {
             var blogPost = _context.BlogPost
-              .Include(blogPost => blogPost.Poster) // returns Reivew.AppUser object
+              .Include(blogPost => blogPost.Poster)
               .Where(blogPost => blogPost.BlogPostID == id)
               .SingleOrDefault();
             return blogPost;
