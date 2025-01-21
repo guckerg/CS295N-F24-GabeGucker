@@ -1,9 +1,10 @@
-﻿namespace GGinfoSite.Models
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+
+namespace GGinfoSite.Models
 {
-    public class AppUser
+    public class AppUser : IdentityUser
     {
-        public int AppUserID { get; set; }
-        public String? Name { get; set; }
         public DateTime SignupDate { get; set; }
     }
 }
