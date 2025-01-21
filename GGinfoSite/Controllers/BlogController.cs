@@ -1,5 +1,6 @@
 using GGinfoSite.Data;
 using GGinfoSite.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GGinfoSite.Controllers
@@ -42,6 +43,8 @@ namespace GGinfoSite.Controllers
         [HttpPost]
         public IActionResult BlogPost(BlogPost model)
         {
+            //get appuser object for the current user
+            //model.Poster = userManager.GetUserAsync(User).Result; //wont work?
             model.PostTime = DateTime.Now;
             if (repo.StoreBlogPost(model) > 0)
             {
