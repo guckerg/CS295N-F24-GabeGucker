@@ -24,7 +24,7 @@ namespace GGinfoSite.Controllers
         public IActionResult Filter(string poster, string date)
         {
             var blogPosts = repo.GetBlogPosts()
-                .Where(b => b.Poster.Name == poster || poster == null)
+                .Where(b => b.Poster.UserName == poster || poster == null)
                 .ToList();
             return View("Index", blogPosts);
         }

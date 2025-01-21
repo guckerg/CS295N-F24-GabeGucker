@@ -2,19 +2,20 @@
 using System;
 using GGinfoSite.Models;
 using GGinfoSite.Data;
+using Microsoft.AspNetCore.Identity;
 
 public class SeedData
 {
-    public static void Seed(ApplicationDbContext context)
+    public static void Seed(ApplicationDbContext context, IServiceProvider provider)
     {
-        if (!context.BlogPost.Any())  // this is to prevent adding duplicate data
+        if (!context.BlogPost.Any())
         {
-            // Create User objects
-            AppUser blogPoster = new AppUser { Name = "Gabe Gucker" };
-            AppUser blogPoster2 = new AppUser { Name = "Gabe Gucker" };
-            // Queue up user objects to be saved to the DB
-            context.AppUsers.Add(blogPoster);
-            context.AppUsers.Add(blogPoster2);
+            var userManager = provider.
+                GetRequiredService<UserManager<AppUser>>();
+            const string SECRET_PASSWORD = "Secret123!";
+            AppUser gabeGucker = new AppUser { UserName = "Gabe Gucker" };
+            var result = userManager.CreateAsync(gabeGucker, SECRET_PASSWORD);
+
             context.SaveChanges();  // Saving adds UserId to User objects
 
             BlogPost blogPost = new BlogPost
@@ -35,11 +36,11 @@ public class SeedData
                 "while minimizing potential downsides. For both new and seasoned coffee " +
                 "lovers, understanding caffeine's effects can help you make informed " +
                 "decisions about your consumption and enjoy this beloved stimulant responsibly!",
-                Poster = blogPoster,
+                Poster = gabeGucker,
                 PostRating = 5,
-                PostTime = DateTime.Parse("11/1/2020")
+                PostTime = DateTime.Parse("11/1/2024")
             };
-            context.BlogPost.Add(blogPost);  // queues up a review to be added to the DB
+            context.BlogPost.Add(blogPost);
 
             blogPost = new BlogPost
             {
@@ -55,9 +56,9 @@ public class SeedData
                 "the intense flavor of a dark roast or the subtle nuances of a light roast, " +
                 "you can enjoy your coffee knowing that the caffeine content will be quite " +
                 "similar. Cheers to discovering your perfect cup!",
-                Poster = blogPoster2,
+                Poster = gabeGucker,
                 PostRating = 4,
-                PostTime = DateTime.Parse("11/2/2020")
+                PostTime = DateTime.Parse("11/5/2024")
             };
             context.BlogPost.Add(blogPost);
             context.SaveChanges(); // stores all the reviews in the DB

@@ -50,8 +50,8 @@ app.MapControllerRoute(
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider
-                         .GetRequiredService<ApplicationDbContext>();
-    SeedData.Seed(dbContext);
+        .GetRequiredService<ApplicationDbContext>();
+    SeedData.Seed(dbContext, scope.ServiceProvider);
 }
 
 app.Run();
