@@ -40,6 +40,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//more identity requirements
 app.UseAuthorization();
 app.UseAuthentication();
 

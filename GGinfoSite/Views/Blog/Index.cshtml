@@ -30,12 +30,12 @@
                 {
                     <div class="card p-3 mb-3">
                         <div class="card-body">
-                            <h5 class="card-title mb-2">Title: @blogPost.PostTitle<br /></h5>
+                            <h5 class="card-title mb-2">@blogPost.PostTitle<br /></h5>
                             <p class="card-text">
-                                <strong>Author:</strong> @blogPost.Poster.UserName<br />
-                                <strong>Post:</strong> @blogPost.PostText <br />
-                                <strong>Rating:</strong> @blogPost.PostRating <br />
-                                <strong>Post Date:</strong> @blogPost.PostTime
+                                <strong>Author:</strong>@blogPost.Poster.UserName<br />
+                                @blogPost.PostText <br />
+                                <strong>Rating:</strong>@blogPost.PostRating<br />
+                                <strong>Post Date:</strong>@blogPost.PostTime
                             </p>
                         </div>
                     </div>
