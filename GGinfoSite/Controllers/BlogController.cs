@@ -1,5 +1,6 @@
 using GGinfoSite.Data;
 using GGinfoSite.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GGinfoSite.Controllers
@@ -8,10 +9,15 @@ namespace GGinfoSite.Controllers
     {
         //private instance variable
         IBlogPostRepository repo;
+        private UserManager<AppUser> userManager;
+        private SignInManager<AppUser> signInManager;
 
         //constructor
-        public BlogController(IBlogPostRepository r)
+        public BlogController(UserManager<AppUser> userMngr,
+            SignInManager<AppUser> signInMngr, IBlogPostRepository r)
         {
+            userManager = userMngr;
+            signInManager = signInMngr;
             repo = r;
         }
         
@@ -42,16 +48,16 @@ namespace GGinfoSite.Controllers
         [HttpPost]
         public IActionResult BlogPost(BlogPost model)
         {
+            //get appuser object for the current user via Identity
+            model.Poster = userManager.GetUserAsync(User).Result;
+
+            //TODO: modify register code to get user's name
+            
             model.PostTime = DateTime.Now;
-            if (repo.StoreBlogPost(model) > 0)
-            {
-                return RedirectToAction("Index", new { blogPostID = model.BlogPostID });
-            }
-            else
-            {
-                ViewBag.ErrorMessage = "There was an error saving the Blog Post.";
-                return View();
-            }
+
+            //Store model in database
+            repo.StoreBlogPost(model);
+            return View(model);
         }
     }
 }
