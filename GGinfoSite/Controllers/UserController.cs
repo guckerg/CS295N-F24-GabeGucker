@@ -77,7 +77,7 @@ namespace GGinfoSite.Controllers
             {
                 //update user contributions to [DeletedUser] to maintain data
                 /*
-                    var blogPosts = dbcontext.blogposts.where(p => p.UserID == id).ToList();
+                    var database.posts = posts.where(p => p.UserID == id).ToList();
                     foreach(var post in posts)
                     {
                         post.Poster = "[DeletedUser]";
