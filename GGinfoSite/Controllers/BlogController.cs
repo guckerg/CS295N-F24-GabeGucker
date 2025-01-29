@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GGinfoSite.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class BlogController : Controller
     {
         //private instance variable

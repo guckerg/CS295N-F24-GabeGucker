@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using GGinfoSite.Models;
 using GGinfoSite.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace GGinfoSite.Controllers
 {
-    //[Authorize(Roles = "Admin")]
-    //[Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private UserManager<AppUser> userManager;
@@ -75,6 +75,18 @@ namespace GGinfoSite.Controllers
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
+                //update user contributions to [DeletedUser] to maintain data
+                /*
+                    var blogPosts = dbcontext.blogposts.where(p => p.UserID == id).ToList();
+                    foreach(var post in posts)
+                    {
+                        post.Poster = "[DeletedUser]";
+                    }
+                    dbcontext.posts.updaterange();
+                    await dbcontext.savechangesAsync();
+                */
+
+
                 IdentityResult result = await userManager.DeleteAsync(user);
                 if (!result.Succeeded)
                 {
