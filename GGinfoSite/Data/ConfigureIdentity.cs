@@ -17,8 +17,12 @@ namespace GGinfoSite.Data
             await CreateRole(MEMBER);
             const string ADMIN = "Admin";
             await CreateRole(ADMIN);
-            const string PASSWORD = "password";
-            await CreateUser("admin", PASSWORD, ADMIN);
+            const string PASSWORD = "Secret123!";
+            await CreateUser("admin", "", PASSWORD, ADMIN);
+            await CreateUser("Reid", "Duke", PASSWORD, MEMBER);
+            await CreateUser("Sam", "Black", PASSWORD, MEMBER);
+            await CreateUser("Gabe", "Gucker", PASSWORD, MEMBER);
+
         }
 
         private static async Task CreateRole(string roleName)
@@ -29,9 +33,10 @@ namespace GGinfoSite.Data
             }
         }
 
-        private static async Task CreateUser(string userName, string password, string role)
+        private static async Task CreateUser(string firstName, string lastName, string password, string role)
         {
-            AppUser user = new AppUser { UserName = userName };
+            AppUser user = new AppUser { UserName = firstName + lastName, 
+                                         Name = firstName + " " + lastName };
             var result = await userManager.CreateAsync(user, password);
             if (result.Succeeded)
             {
