@@ -50,6 +50,7 @@ app.MapControllerRoute(
 
 using (var scope = app.Services.CreateScope())
 {
+    await ConfigureIdentity.CreateAdminUserAsync(scope.ServiceProvider);
     var dbContext = scope.ServiceProvider
         .GetRequiredService<ApplicationDbContext>();
     SeedData.Seed(dbContext, scope.ServiceProvider);
