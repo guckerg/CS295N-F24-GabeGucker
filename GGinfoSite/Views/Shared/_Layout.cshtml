@@ -36,31 +36,34 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="About">About</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav ms-auto">
                         @if (signInManager.IsSignedIn(User))
                         {
-                            //Signed-in user - Log out button and username
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="User" asp-action="Index">
+                                        <span class="fas fa-cog"></span>&nbsp;Admin
+                                    </a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <form method="post" asp-action="Logout" asp-controller="Account">
-                                    <input type="submit" value="Log out" class="btn btn-outline-dark" />
+                                    <input type="submit" value="Log Out" class="btn btn-outline-dark" />
                                     <span class="text-dark">@User.Identity.Name</span>
                                 </form>
                             </li>
                         }
                         else
                         {
-                            //Get current action
                             var action = ViewContext.RouteData.Values["action"]?.ToString();
-                            //anonymous user - register link and Log In button
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">
                                     <span class="fas fa-edit"></span> &nbsp; Register
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a asp-action="Login" asp-controller="Account" class="btn btn-outline-dark">
-                                    Log In
-                                </a>
+                                <a asp-action="Login" asp-controller="Account" class="btn btn-outline-dark">Log In</a>
                             </li>
                         }
                     </ul>
