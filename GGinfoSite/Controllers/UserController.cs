@@ -6,7 +6,7 @@ using GGinfoSite.Models.ViewModels;
 
 namespace GGinfoSite.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     //[Area("Admin")]
     public class UserController : Controller
     {
@@ -22,17 +22,21 @@ namespace GGinfoSite.Controllers
         public IActionResult Index()
         {
             List<AppUser> users = new List<AppUser>();
+            users = userManager.Users.ToList();
+
             foreach (AppUser user in users)
             {
                 var task = userManager.GetRolesAsync(user);
                 task.Wait();
                 user.RoleNames = task.Result;
             }
+
             UserViewModel model = new UserViewModel
             {
                 Users = users,
                 Roles = roleManager.Roles
             };
+
             return View(model);
         }
 
