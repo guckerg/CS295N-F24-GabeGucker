@@ -13,10 +13,10 @@ public class SeedData
             var userManager = provider.
                 GetRequiredService<UserManager<AppUser>>();
             const string SECRET_PASSWORD = "Secret123!";
-            AppUser gabeGucker = new AppUser { UserName = "Gabe Gucker" };
-            var result = userManager.CreateAsync(gabeGucker, SECRET_PASSWORD);
+            AppUser seededUser = new AppUser { UserName = "GuckerG" };
+            var result = userManager.CreateAsync(seededUser, SECRET_PASSWORD);
 
-            context.SaveChanges();  // Saving adds UserId to User objects
+            context.SaveChanges();
 
             BlogPost blogPost = new BlogPost
             {
@@ -36,7 +36,7 @@ public class SeedData
                 "while minimizing potential downsides. For both new and seasoned coffee " +
                 "lovers, understanding caffeine's effects can help you make informed " +
                 "decisions about your consumption and enjoy this beloved stimulant responsibly!",
-                Poster = gabeGucker,
+                Poster = seededUser,
                 PostRating = 5,
                 PostTime = DateTime.Parse("11/1/2024")
             };
@@ -56,12 +56,12 @@ public class SeedData
                 "the intense flavor of a dark roast or the subtle nuances of a light roast, " +
                 "you can enjoy your coffee knowing that the caffeine content will be quite " +
                 "similar. Cheers to discovering your perfect cup!",
-                Poster = gabeGucker,
+                Poster = seededUser,
                 PostRating = 4,
                 PostTime = DateTime.Parse("11/5/2024")
             };
             context.BlogPost.Add(blogPost);
-            context.SaveChanges(); // stores all the reviews in the DB
+            context.SaveChanges();
         }
     }
 }
