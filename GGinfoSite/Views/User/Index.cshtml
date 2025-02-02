@@ -4,6 +4,18 @@
 }
 
 <h1 class="mb-2">Manage Users</h1>
+@if(TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
 <h5 class="mt-2">
     <a asp-action="Add">Add a User</a>
 </h5>

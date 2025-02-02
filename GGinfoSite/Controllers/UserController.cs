@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using GGinfoSite.Models;
 using GGinfoSite.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Data.SqlTypes;
 
 namespace GGinfoSite.Controllers
 {
@@ -75,27 +76,33 @@ namespace GGinfoSite.Controllers
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
-                //update user contributions to [DeletedUser] to maintain data
-                /*
-                    var database.posts = posts.where(p => p.UserID == id).ToList();
-                    foreach(var post in posts)
-                    {
-                        post.Poster = "[DeletedUser]";
-                    }
-                    dbcontext.posts.updaterange();
-                    await dbcontext.savechangesAsync();
-                */
-
-
-                IdentityResult result = await userManager.DeleteAsync(user);
-                if (!result.Succeeded)
+                try
                 {
-                    string errorMessage = "";
-                    foreach (IdentityError error in result.Errors)
+                    IdentityResult result = await userManager.DeleteAsync(user);
+                    if (!result.Succeeded)
                     {
-                        errorMessage += error.Description + " | ";
+                        string errorMessage = "";
+                        foreach (IdentityError error in result.Errors)
+                        {
+                            errorMessage += error.Description + " | ";
+                        }
+                        TempData["message"] = errorMessage;
                     }
-                    TempData["message"] = errorMessage;
+                    else
+                    {
+                        TempData["SuccessMessage"] = "User deleted successfully.";
+                    }
+                }
+                catch (DbUpdateException ex)
+                {
+                    if(ex.InnerException != null && ex.InnerException.Message.Contains("foreign key"))
+                    {
+                        TempData["ErrorMessage"] = "User cannot be deleted, as they are referenced in other records.";
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "An unexpected error occured while deleing the user.";
+                    }
                 }
             }
             return RedirectToAction("Index");
