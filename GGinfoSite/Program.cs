@@ -41,8 +41,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 //more identity requirements
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
@@ -50,6 +50,7 @@ app.MapControllerRoute(
 
 using (var scope = app.Services.CreateScope())
 {
+    await ConfigureIdentity.CreateAdminUserAsync(scope.ServiceProvider);
     var dbContext = scope.ServiceProvider
         .GetRequiredService<ApplicationDbContext>();
     SeedData.Seed(dbContext, scope.ServiceProvider);

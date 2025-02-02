@@ -10,14 +10,9 @@ public class SeedData
     {
         if (!context.BlogPost.Any())
         {
-            var userManager = provider.
-                GetRequiredService<UserManager<AppUser>>();
-            const string SECRET_PASSWORD = "Secret123!";
-            AppUser gabeGucker = new AppUser { UserName = "Gabe Gucker" };
-            var result = userManager.CreateAsync(gabeGucker, SECRET_PASSWORD);
+            var userManager = provider.GetRequiredService<UserManager<AppUser>>();
 
-            context.SaveChanges();  // Saving adds UserId to User objects
-
+            AppUser reidDuke = userManager.FindByNameAsync("ReidDuke").Result;
             BlogPost blogPost = new BlogPost
             {
                 PostTitle = "The Effects of Caffine on the Human Body.",
@@ -36,12 +31,13 @@ public class SeedData
                 "while minimizing potential downsides. For both new and seasoned coffee " +
                 "lovers, understanding caffeine's effects can help you make informed " +
                 "decisions about your consumption and enjoy this beloved stimulant responsibly!",
-                Poster = gabeGucker,
+                Poster = reidDuke,
                 PostRating = 5,
                 PostTime = DateTime.Parse("11/1/2024")
             };
             context.BlogPost.Add(blogPost);
 
+            AppUser samBlack = userManager.FindByNameAsync("SamBlack").Result;
             blogPost = new BlogPost
             {
                 PostTitle = "Does Dark Roast Have More or Less Caffine Than Other Roasts?",
@@ -56,12 +52,24 @@ public class SeedData
                 "the intense flavor of a dark roast or the subtle nuances of a light roast, " +
                 "you can enjoy your coffee knowing that the caffeine content will be quite " +
                 "similar. Cheers to discovering your perfect cup!",
-                Poster = gabeGucker,
+                Poster = samBlack,
                 PostRating = 4,
                 PostTime = DateTime.Parse("11/5/2024")
             };
             context.BlogPost.Add(blogPost);
-            context.SaveChanges(); // stores all the reviews in the DB
+
+            AppUser gabeGucker = userManager.FindByNameAsync("GabeGucker").Result;
+            blogPost = new BlogPost
+            {
+                PostTitle = "Test 3rd Post(Title)",
+                PostText = "Test 3rd Post(Body)",
+                Poster = gabeGucker,
+                PostRating = 4,
+                PostTime = DateTime.Parse("1/14/2025")
+            };
+            context.BlogPost.Add(blogPost);
+
+            context.SaveChanges();
         }
     }
 }
