@@ -2,18 +2,21 @@
 using GGinfoSite.Data;
 using GGinfoSite.Controllers;
 using GGinfoSite.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace CafeChroniclesTests
 {
     public class BlogControllerTests
     {
-        IBlogPostRepository _repo = new FakeBlogPostRepository();
-        BlogController _controller;
-        BlogPost _blogPost = new BlogPost();
+        private readonly BlogController _controller;
+        private UserManager<AppUser> _userManager;
+        private SignInManager<AppUser> _signInManager;
 
         public BlogControllerTests()
         {
-            _controller = new BlogController(_repo);
+            var testUserManager = _userManager;
+            var testSignInManager = _signInManager;
+            _controller = new BlogController(_userManager, _signInManager, _repo);
         }
 
 

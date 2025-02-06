@@ -12,20 +12,22 @@ namespace GGinfoSite.Data
             _context = appDbContext;
         }
 
-        public List<BlogPost> GetBlogPosts()
+        public async Task<List<BlogPost>> GetBlogPostsAsync()
         {
-            var blogPosts = _context.BlogPost
-              .Include(blogPost => blogPost.Poster)
-              .ToList<BlogPost>();
-            return blogPosts;
+            var blogList = await _context.BlogPost.Include(blogPost => blogPost.Poster).ToListAsync();
+            return blogList;
         }
 
-        public BlogPost GetBlogPostById(int id)
+        public async Task<BlogPost> GetBlogPostByIdAsync(int id)
         {
-            var blogPost = _context.BlogPost
-              .Include(blogPost => blogPost.Poster)
-              .Where(blogPost => blogPost.BlogPostID == id)
-              .SingleOrDefault();
+            var blogPost = await _context.BlogPost.Include(blogPost => blogPost.Poster)
+                .Where(blogPost => blogPost.BlogPostID == id).SingleOrDefaultAsync();
+
+            if (blogPost == null)
+            {
+                throw new Exception($"Blogpost with ID {id} not found");
+            }
+
             return blogPost;
         }
 
@@ -34,7 +36,6 @@ namespace GGinfoSite.Data
             model.PostTime = DateTime.Now;
             _context.BlogPost.Add(model);
             return _context.SaveChanges();
-            // returns a positive value if succussful
         }
     }
 }
