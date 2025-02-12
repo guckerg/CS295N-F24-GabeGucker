@@ -4,8 +4,14 @@ namespace GGinfoSite.Data
 {
     public interface IBlogPostRepository
     {
+        //BlogPost Objects
         public Task<List<BlogPost>> GetBlogPostsAsync();
-        public Task<BlogPost> GetBlogPostByIdAsync(int id); // Returns a model object
-        public int StoreBlogPost(BlogPost model);  // Saves a model object to the db
+        public Task<BlogPost> GetBlogPostByIdAsync(int id);
+        public int StoreBlogPost(BlogPost model);
+
+        //Comment Objects
+        public Task<List<Comment>> GetCommentsAsync();
+        public Task<Comment> GetCommentByIdAsync(int id);
+        public int StoreComment(Comment model);
     }
 }
