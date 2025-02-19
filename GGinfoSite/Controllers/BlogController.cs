@@ -45,7 +45,7 @@ namespace GGinfoSite.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BlogPostAsync(BlogPost model)
+        public async Task<IActionResult> CreateBlogPostAsync(BlogPost model)
         {
             model.Poster = await userManager.GetUserAsync(User);
             model.PostTime = DateTime.Now;

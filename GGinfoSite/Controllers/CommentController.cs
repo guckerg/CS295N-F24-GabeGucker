@@ -10,24 +10,26 @@ namespace GGinfoSite.Controllers
     [Authorize]
     public class CommentController : Controller
     {
-        IBlogPostRepository repo;
+        IBlogPostRepository _repo;
         ApplicationDbContext _context;
         private UserManager<AppUser> _userManager;
 
         public CommentController(IBlogPostRepository r, ApplicationDbContext context, 
             UserManager<AppUser> userMnger)
         {
-            repo = r;
+            _repo = r;
             _context = context;
             _userManager = userMnger;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateComment(Comment comment)
+        public async Task<IActionResult> CreateCommentAsync(Comment model)
         {
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
-            return View(); //make this go somewhere
+            model.Poster = await _userManager.GetUserAsync(User);
+            model.CommentTimeStamp = DateTime.Now;
+
+            _repo.StoreComment(model);
+            return View(model);
         }
 
         [HttpGet]
