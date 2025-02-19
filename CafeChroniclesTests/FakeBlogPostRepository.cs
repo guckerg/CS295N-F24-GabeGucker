@@ -5,15 +5,20 @@ public class FakeBlogPostRepository : IBlogPostRepository
 {
     private List<BlogPost> blogPosts = new List<BlogPost>();
 
-    public BlogPost GetBlogPostById(int id)
+    public async Task<BlogPost> GetBlogPostByIdAsync(int id)
     {
-        BlogPost blogPost = blogPosts.Find(bp => bp.BlogPostID == id);
-        return blogPost;
+        BlogPost blogPost = blogPosts.FirstOrDefault(bp => bp.BlogPostID == id);
+        return await Task.FromResult(blogPost);
+        //allows me to simulate async behavior in a fake repo
     }
 
-    public List<BlogPost> GetBlogPosts()
+    public async Task<List<BlogPost>> GetBlogPostsAsync()
     {
-        return blogPosts;
+        return await Task.FromResult(blogPosts);
+        /*
+         * simulating async behavior, as this method
+         * fetches a list in the real repository
+        */
     }
 
     public int StoreBlogPost(BlogPost model)

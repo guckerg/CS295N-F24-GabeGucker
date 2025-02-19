@@ -9,12 +9,10 @@ namespace GGinfoSite.Controllers
     [Authorize]
     public class BlogController : Controller
     {
-        //private instance variable
         IBlogPostRepository repo;
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
 
-        //constructor
         public BlogController(UserManager<AppUser> userMngr,
             SignInManager<AppUser> signInMngr, IBlogPostRepository r)
         {
@@ -23,18 +21,17 @@ namespace GGinfoSite.Controllers
             repo = r;
         }
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var blogPosts = repo.GetBlogPosts();
+            var blogPosts = await repo.GetBlogPostsAsync();
             return View(blogPosts);
         }
 
-        public IActionResult Filter(string poster, string date)
+        public async Task<IActionResult> Filter(string poster, string date)
         {
-            var blogPosts = repo.GetBlogPosts()
-                .Where(b => b.Poster.UserName == poster || poster == null)
-                .ToList();
-            return View("Index", blogPosts);
+            var blogPosts = await repo.GetBlogPostsAsync();
+            var filteredBlogPosts = blogPosts.Where(b => b.Poster.UserName == poster || poster == null).ToList();
+            return View("Index", filteredBlogPosts);
         }
 
         public IActionResult About()
@@ -48,16 +45,11 @@ namespace GGinfoSite.Controllers
         }
 
         [HttpPost]
-        public IActionResult BlogPost(BlogPost model)
+        public async Task<IActionResult> BlogPostAsync(BlogPost model)
         {
-            //get appuser object for the current user via Identity
-            model.Poster = userManager.GetUserAsync(User).Result;
-
-            //TODO: modify register code to get user's name
-            
+            model.Poster = await userManager.GetUserAsync(User);
             model.PostTime = DateTime.Now;
 
-            //Store model in database
             repo.StoreBlogPost(model);
             return View(model);
         }
