@@ -8,17 +8,17 @@ namespace GGinfoSite.Models
         public int CommentID { get; set; }
 
         [Required]
-        public AppUser Poster { get; set; }
+        public AppUser Commenter { get; set; }
 
         [Required]
-        public int PostID { get; set; }
+        public int BlogPostID { get; set; }
 
         [Required]
         [MaxLength(100)]
         public string CommentText { get; set; }
 
         [Required]
-        public DateTime CommentTimeStamp { get; set; }
+        public DateTime CommentDate { get; set; }
 
         public int? ParentCommentID { get; set; }
     }
