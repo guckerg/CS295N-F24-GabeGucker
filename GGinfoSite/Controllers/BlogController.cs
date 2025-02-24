@@ -1,5 +1,6 @@
 using GGinfoSite.Data;
 using GGinfoSite.Models;
+using GGinfoSite.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,12 @@ namespace GGinfoSite.Controllers
         public IActionResult BlogPost()
         {
             return View();
+        }
+
+        public IActionResult Comment(int blogPostID)
+        {
+            var comment = new Comment { BlogPostID = blogPostID };
+            return View(comment);
         }
 
         [HttpPost]

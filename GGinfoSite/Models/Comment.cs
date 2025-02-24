@@ -19,7 +19,5 @@ namespace GGinfoSite.Models
 
         [Required]
         public DateTime CommentDate { get; set; }
-
-        public int? ParentCommentID { get; set; }
     }
 }

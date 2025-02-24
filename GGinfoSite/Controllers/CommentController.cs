@@ -25,8 +25,8 @@ namespace GGinfoSite.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCommentAsync(Comment model)
         {
-            model.Poster = await _userManager.GetUserAsync(User);
-            model.CommentTimeStamp = DateTime.Now;
+            model.Commenter = await _userManager.GetUserAsync(User);
+            model.CommentDate = DateTime.Now;
 
             _repo.StoreComment(model);
             return View(model);
@@ -36,6 +36,8 @@ namespace GGinfoSite.Controllers
         public async Task<IActionResult> GetCommentByIdAsync()
         {
             //add definition
+            await Task.Delay(100);
+            Console.WriteLine("Async Method completed.");
             return View();
         }
     }

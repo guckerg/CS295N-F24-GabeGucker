@@ -46,7 +46,7 @@ namespace GGinfoSite.Data
         }
         public async Task<Comment> GetCommentByIdAsync(int id)
         {
-            var comment = await _context.Comments.Include(comment => comment.UserID)
+            var comment = await _context.Comments.Include(comment => comment.CommentID)
                 .Where(comment => comment.CommentID == id).SingleOrDefaultAsync();
 
             if (comment == null)
@@ -58,7 +58,7 @@ namespace GGinfoSite.Data
         }
         public int StoreComment(Comment model)
         {
-            model.CommentTimeStamp = DateTime.Now;
+            model.CommentDate = DateTime.Now;
             _context.Comments.Add(model);
             return _context.SaveChanges();
         }
