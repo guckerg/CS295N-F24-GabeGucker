@@ -10,5 +10,6 @@ namespace GGinfoSite.Models
         public string? PostText { get; set; }
         public DateTime PostTime { get; set; }
         public int PostRating { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

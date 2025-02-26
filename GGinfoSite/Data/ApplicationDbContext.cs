@@ -8,6 +8,7 @@ namespace GGinfoSite.Data
     {
         public ApplicationDbContext(
            DbContextOptions<ApplicationDbContext> options) : base(options) { }
-        public DbSet<BlogPost> BlogPost { get; set; }
+        public DbSet<BlogPost> BlogPosts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

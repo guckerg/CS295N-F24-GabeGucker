@@ -12,15 +12,14 @@ namespace GGinfoSite.Data
             _context = appDbContext;
         }
 
-        public async Task<List<BlogPost>> GetBlogPostsAsync()
+        #region Blogs
+        public IQueryable<BlogPost> GetBlogPostsQuery()
         {
-            var blogList = await _context.BlogPost.Include(blogPost => blogPost.Poster).ToListAsync();
-            return blogList;
+            return _context.BlogPosts.Include(blogPost => blogPost.Poster);
         }
-
         public async Task<BlogPost> GetBlogPostByIdAsync(int id)
         {
-            var blogPost = await _context.BlogPost.Include(blogPost => blogPost.Poster)
+            var blogPost = await _context.BlogPosts.Include(blogPost => blogPost.Poster)
                 .Where(blogPost => blogPost.BlogPostID == id).SingleOrDefaultAsync();
 
             if (blogPost == null)
@@ -30,12 +29,44 @@ namespace GGinfoSite.Data
 
             return blogPost;
         }
-
-        public int StoreBlogPost(BlogPost model)
+        public async Task AddBlogPostAsync(BlogPost model)
         {
             model.PostTime = DateTime.Now;
-            _context.BlogPost.Add(model);
+            _context.BlogPosts.Add(model);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateBlogPostAsync(BlogPost model)
+        {
+            _context.BlogPosts.Update(model);
+            await _context.SaveChangesAsync();
+        }
+        #endregion
+
+        #region Comments
+        public async Task<List<Comment>> GetCommentsAsync()
+        {
+            var commentList = await _context.Comments.Include(comment => comment.CommentID).ToListAsync();
+            return commentList; //Maybe do this differently
+        }
+        public async Task<Comment> GetCommentByIdAsync(int id)
+        {
+            var comment = await _context.Comments.Include(comment => comment.CommentID)
+                .Where(comment => comment.CommentID == id).SingleOrDefaultAsync();
+
+            if (comment == null)
+            {
+                throw new Exception($"Comment with ID {id} not found");
+            }
+
+            return comment;
+        }
+        public int StoreComment(Comment model)
+        {
+            model.CommentDate = DateTime.Now;
+            _context.Comments.Add(model);
             return _context.SaveChanges();
         }
+        #endregion
     }
 }

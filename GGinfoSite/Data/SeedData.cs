@@ -8,7 +8,7 @@ public class SeedData
 {
     public static void Seed(ApplicationDbContext context, IServiceProvider provider)
     {
-        if (!context.BlogPost.Any())
+        if (!context.BlogPosts.Any())
         {
             var userManager = provider.GetRequiredService<UserManager<AppUser>>();
 
@@ -35,7 +35,7 @@ public class SeedData
                 PostRating = 5,
                 PostTime = DateTime.Parse("11/1/2024")
             };
-            context.BlogPost.Add(blogPost);
+            context.BlogPosts.Add(blogPost);
 
             AppUser samBlack = userManager.FindByNameAsync("SamBlack").Result;
             blogPost = new BlogPost
@@ -56,7 +56,7 @@ public class SeedData
                 PostRating = 4,
                 PostTime = DateTime.Parse("11/5/2024")
             };
-            context.BlogPost.Add(blogPost);
+            context.BlogPosts.Add(blogPost);
 
             AppUser gabeGucker = userManager.FindByNameAsync("GabeGucker").Result;
             blogPost = new BlogPost
@@ -67,7 +67,7 @@ public class SeedData
                 PostRating = 4,
                 PostTime = DateTime.Parse("1/14/2025")
             };
-            context.BlogPost.Add(blogPost);
+            context.BlogPosts.Add(blogPost);
 
             context.SaveChanges();
         }

@@ -1,8 +1,10 @@
 using GGinfoSite.Data;
 using GGinfoSite.Models;
+using GGinfoSite.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GGinfoSite.Controllers
 {
@@ -20,19 +22,24 @@ namespace GGinfoSite.Controllers
             signInManager = signInMngr;
             repo = r;
         }
-        
+
         public async Task<IActionResult> Index()
         {
-            var blogPosts = await repo.GetBlogPostsAsync();
+            var blogPosts = await repo.GetBlogPostsQuery()
+                                      .Include(bp => bp.Comments)
+                                      .ToListAsync();
             return View(blogPosts);
         }
 
         public async Task<IActionResult> Filter(string poster, string date)
         {
-            var blogPosts = await repo.GetBlogPostsAsync();
+            var blogPostsQuery = repo.GetBlogPostsQuery().Include(bp => bp.Comments);
+            var blogPosts = await blogPostsQuery.ToListAsync();
             var filteredBlogPosts = blogPosts.Where(b => b.Poster.UserName == poster || poster == null).ToList();
+
             return View("Index", filteredBlogPosts);
         }
+
 
         public IActionResult About()
         {
@@ -44,13 +51,39 @@ namespace GGinfoSite.Controllers
             return View();
         }
 
+        public IActionResult Comment(int blogPostID)
+        {
+            var commentVM = new CommentVM { BlogPostID = blogPostID };
+            return View(commentVM);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> BlogPostAsync(BlogPost model)
+        public async Task<IActionResult> Comment(CommentVM commentVM)
+        {
+            //extract comment from VM
+            var comment = new Comment { CommentText = commentVM.CommentText };
+            comment.Commenter = userManager.GetUserAsync(User).Result;
+            comment.CommentDate = DateTime.Now;
+
+            //grab parent blogpost
+            var blogPost = await repo.GetBlogPostsQuery()
+                         .Include(bp => bp.Comments)
+                         .FirstOrDefaultAsync(bp => bp.BlogPostID == commentVM.BlogPostID);
+
+
+            blogPost.Comments.Add(comment);
+            await repo.UpdateBlogPostAsync(blogPost);
+
+            return RedirectToAction("BlogPost");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBlogPostAsync(BlogPost model)
         {
             model.Poster = await userManager.GetUserAsync(User);
             model.PostTime = DateTime.Now;
 
-            repo.StoreBlogPost(model);
+            await repo.AddBlogPostAsync(model);
             return View(model);
         }
     }
