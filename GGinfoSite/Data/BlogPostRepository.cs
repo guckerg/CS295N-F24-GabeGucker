@@ -13,10 +13,9 @@ namespace GGinfoSite.Data
         }
 
         #region Blogs
-        public async Task<List<BlogPost>> GetBlogPostsAsync()
+        public IQueryable<BlogPost> GetBlogPostsQuery()
         {
-            var blogList = await _context.BlogPosts.Include(blogPost => blogPost.Poster).ToListAsync();
-            return blogList;
+            return _context.BlogPosts.Include(blogPost => blogPost.Poster);
         }
         public async Task<BlogPost> GetBlogPostByIdAsync(int id)
         {
@@ -30,11 +29,17 @@ namespace GGinfoSite.Data
 
             return blogPost;
         }
-        public int StoreBlogPost(BlogPost model)
+        public async Task AddBlogPostAsync(BlogPost model)
         {
             model.PostTime = DateTime.Now;
             _context.BlogPosts.Add(model);
-            return _context.SaveChanges();
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateBlogPostAsync(BlogPost model)
+        {
+            _context.BlogPosts.Update(model);
+            await _context.SaveChangesAsync();
         }
         #endregion
 
