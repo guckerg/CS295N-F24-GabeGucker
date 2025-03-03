@@ -27,6 +27,7 @@ namespace GGinfoSite.Controllers
         {
             var blogPosts = await repo.GetBlogPostsQuery()
                                       .Include(bp => bp.Comments)
+                                        .ThenInclude(c => c.Commenter)
                                       .ToListAsync();
             return View(blogPosts);
         }
@@ -70,11 +71,10 @@ namespace GGinfoSite.Controllers
                          .Include(bp => bp.Comments)
                          .FirstOrDefaultAsync(bp => bp.BlogPostID == commentVM.BlogPostID);
 
-
             blogPost.Comments.Add(comment);
             await repo.UpdateBlogPostAsync(blogPost);
 
-            return RedirectToAction("BlogPost");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

@@ -35,7 +35,28 @@
                                 <strong>Author:</strong>@blogPost.Poster.UserName<br />
                                 @blogPost.PostText <br />
                                 <strong>Rating:</strong>@blogPost.PostRating<br />
-                                <strong>Post Date:</strong>@blogPost.PostTime
+                                <small class="text-muted">@blogPost.PostTime</small><br />
+                                <div class="comments-section mt-3">
+                                    <h6>Comments:</h6>
+                                    @if (blogPost.Comments != null && blogPost.Comments.Any())
+                                    {
+                                        @foreach (var comment in blogPost.Comments)
+                                        {
+                                            <div class="card mb-2">
+                                                <div class="card-body">
+                                                    <strong>@comment.Commenter.UserName:</strong> @comment.CommentText <br />
+                                                    <small class="text-muted">Posted on: @comment.CommentDate</small>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary col-md-2 mx-auto"
+                                        onclick="window.location.href='/Blog/Comment?blogPostId=@blogPost.BlogPostID'">
+                                        Leave a Comment
+                                    </button>
+                                </div>
                             </p>
                         </div>
                     </div>

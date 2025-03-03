@@ -47,7 +47,7 @@ namespace GGinfoSite.Data
         public async Task<List<Comment>> GetCommentsAsync()
         {
             var commentList = await _context.Comments.Include(comment => comment.CommentID).ToListAsync();
-            return commentList; //Maybe do this differently
+            return commentList;
         }
         public async Task<Comment> GetCommentByIdAsync(int id)
         {
