@@ -41,6 +41,13 @@ namespace GGinfoSite.Data
             _context.BlogPosts.Update(model);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<int> DeleteBlogPostAsync(int id)
+        {
+            var targetBlogPost = await _context.BlogPosts.FindAsync(id);
+            _context.BlogPosts.Remove(targetBlogPost);
+            return await _context.SaveChangesAsync();
+        }
         #endregion
 
         #region Comments
@@ -66,6 +73,19 @@ namespace GGinfoSite.Data
             model.CommentDate = DateTime.Now;
             _context.Comments.Add(model);
             return _context.SaveChanges();
+        }
+
+        public async Task UpdateCommentAsync(Comment comment)
+        {
+            _context.Comments.Update(comment);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteCommentAsync(int id)
+        {
+            var targetComment = await _context.Comments.FindAsync(id);
+            _context.Comments.Remove(targetComment);
+            return await _context.SaveChangesAsync();
         }
         #endregion
     }

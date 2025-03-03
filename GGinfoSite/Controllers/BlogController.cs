@@ -86,5 +86,19 @@ namespace GGinfoSite.Controllers
             await repo.AddBlogPostAsync(model);
             return View(model);
         }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteCommentAsync(int id)
+        {
+            await repo.DeleteCommentAsync(id);
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteBlogPostAsync(int id)
+        {
+            await repo.DeleteBlogPostAsync(id);
+            return RedirectToAction("Index");
+        }
     }
 }

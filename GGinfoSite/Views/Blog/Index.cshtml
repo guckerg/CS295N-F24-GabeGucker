@@ -43,19 +43,23 @@
                                         @foreach (var comment in blogPost.Comments)
                                         {
                                             <div class="card mb-2">
-                                                <div class="card-body">
-                                                    <strong>@comment.Commenter.UserName:</strong> @comment.CommentText <br />
-                                                    <small class="text-muted">Posted on: @comment.CommentDate</small>
-                                                </div>
+                                            <div class="card-body">
+                                                <strong>@comment.Commenter.UserName:</strong> @comment.CommentText <br />
+                                                <small class="text-muted">Posted on: @comment.CommentDate</small>
+                                            </div>
                                             </div>
                                         }
                                     }
                                 </div>
                                 <div class="row">
-                                    <button type="submit" class="btn btn-primary col-md-2 mx-auto"
-                                        onclick="window.location.href='/Blog/Comment?blogPostId=@blogPost.BlogPostID'">
-                                        Leave a Comment
-                                    </button>
+                                <button type="submit" class="btn btn-primary col-md-2 mx-auto"
+                                    onclick="window.location.href='/Blog/Comment?blogPostId=@blogPost.BlogPostID'">
+                                    Leave a Comment
+                                </button>
+                                    <button type="submit" class="btn btn-danger col-md-2 mx-auto"
+                                    onclick="window.location.href='/Blog/DeleteBlogPostAsync?id=@blogPost.BlogPostID'">
+                                    Delete Blog Post
+                                </button>
                                 </div>
                             </p>
                         </div>
