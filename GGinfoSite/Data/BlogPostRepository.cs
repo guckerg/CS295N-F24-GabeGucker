@@ -68,11 +68,11 @@ namespace GGinfoSite.Data
 
             return comment;
         }
-        public int StoreComment(Comment model)
+        public async Task StoreCommentAsync(Comment comment)
         {
-            model.CommentDate = DateTime.Now;
-            _context.Comments.Add(model);
-            return _context.SaveChanges();
+            comment.CommentDate = DateTime.Now;
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateCommentAsync(Comment comment)

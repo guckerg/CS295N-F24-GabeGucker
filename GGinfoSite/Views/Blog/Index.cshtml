@@ -1,4 +1,6 @@
 ﻿@model List<BlogPost>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
 @{
     ViewData["Title"] = "Top Posts";
 }
@@ -7,18 +9,16 @@
     <h1 class="display-4">Blog Posts</h1>
 </div>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <form method="post" action="/Blog/Filter">
-                <label name="poster" class="col-md-1">Author</label>
-                <input name="poster" class="col-md-4"/>
-                <label name="date" class="col-md-1">Date</label>
-                <input name="date" class="col-md-4"/>
-                <button type="submit" class="col-md-1">Filter</button>
-            </form>
-        </div>
-    </div>
+<div class="container row col-md-12">
+     <form method="post" action="/Blog/Filter">
+         <div class="col-md-8 justify-content-center">
+            <label name="poster">Author</label>
+            <input name="poster"/>
+            <label name="date">Date</label>
+            <input name="date"/>
+            <button type="submit">Filter</button>
+         </div>
+    </form>
 </div>
 
 <div class="container">
@@ -46,21 +46,22 @@
                                             <div class="card-body">
                                                 <strong>@comment.Commenter.UserName:</strong> @comment.CommentText <br />
                                                 <small class="text-muted">Posted on: @comment.CommentDate</small>
+                                                @if (SignInManager.IsSignedIn(User))
+                                                {
+                                                    @if (User.IsInRole("Admin"))
+                                                    {
+                                                        <a asp-controller="Blog" asp-action="DeleteCommentAsync" asp-route-id="@comment.CommentID">Delete Comment</a>
+                                                    }
+                                                }
                                             </div>
                                             </div>
                                         }
                                     }
                                 </div>
-                                <div class="row">
-                                <button type="submit" class="btn btn-primary col-md-2 mx-auto"
-                                    onclick="window.location.href='/Blog/Comment?blogPostId=@blogPost.BlogPostID'">
-                                    Leave a Comment
-                                </button>
-                                    <button type="submit" class="btn btn-danger col-md-2 mx-auto"
-                                    onclick="window.location.href='/Blog/DeleteBlogPostAsync?id=@blogPost.BlogPostID'">
-                                    Delete Blog Post
-                                </button>
-                                </div>
+                                <a asp-controller="Blog" asp-action="Comment" asp-route-BlogPostID="@blogPost.BlogPostID"
+                                   class="col-3 m-3">Add Comment</a>
+                                <a asp-controller="Blog" asp-action="DeleteBlogPostAsync" asp-route-id="@blogPost.BlogPostID"
+                                   class="col-3 m-3">Delete Post</a>
                             </p>
                         </div>
                     </div>

@@ -62,15 +62,15 @@ namespace GGinfoSite.Controllers
         public async Task<IActionResult> Comment(CommentVM commentVM)
         {
             //extract comment from VM
-            var comment = new Comment { CommentText = commentVM.CommentText };
+            var comment = new Comment { CommentText = commentVM.CommentText, BlogPostID = commentVM.BlogPostID }; 
             comment.Commenter = userManager.GetUserAsync(User).Result;
             comment.CommentDate = DateTime.Now;
+            await repo.StoreCommentAsync(comment);
 
             //grab parent blogpost
-            var blogPost = await repo.GetBlogPostsQuery()
-                         .Include(bp => bp.Comments)
-                         .FirstOrDefaultAsync(bp => bp.BlogPostID == commentVM.BlogPostID);
+            var blogPost = await repo.GetBlogPostByIdAsync(commentVM.BlogPostID);
 
+            //assign comment to post
             blogPost.Comments.Add(comment);
             await repo.UpdateBlogPostAsync(blogPost);
 
@@ -88,6 +88,8 @@ namespace GGinfoSite.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteCommentAsync(int id)
         {
             await repo.DeleteCommentAsync(id);
@@ -95,6 +97,7 @@ namespace GGinfoSite.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteBlogPostAsync(int id)
         {
             await repo.DeleteBlogPostAsync(id);

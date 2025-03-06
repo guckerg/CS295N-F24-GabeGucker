@@ -14,7 +14,7 @@ namespace GGinfoSite.Data
         //Comments
         public Task<List<Comment>> GetCommentsAsync();
         public Task<Comment> GetCommentByIdAsync(int id);
-        public int StoreComment(Comment model);
+        public Task StoreCommentAsync(Comment model);
         public Task UpdateCommentAsync(Comment comment);
         public Task<int> DeleteCommentAsync(int id);
     }
