@@ -9,7 +9,8 @@
     </div>
 </div>
 
-<form method="post" class="container">
+<form asp-controller="Blog" asp-action="CreateBlogPost" method="post" class="container">
+    @Html.AntiForgeryToken()
     <div class="row mb-md-3">
         <label for="title" class="control-label col-md-2">Post Title</label>
         <div class="col-md-10">

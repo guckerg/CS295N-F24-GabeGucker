@@ -44,7 +44,37 @@ namespace GGinfoSite.Migrations
 
                     b.HasIndex("PosterId");
 
-                    b.ToTable("BlogPost");
+                    b.ToTable("BlogPosts");
+                });
+
+            modelBuilder.Entity("GGinfoSite.Models.Comment", b =>
+                {
+                    b.Property<int>("CommentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("BlogPostID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CommentDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CommentText")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("CommenterId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("CommentID");
+
+                    b.HasIndex("BlogPostID");
+
+                    b.HasIndex("CommenterId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -268,6 +298,23 @@ namespace GGinfoSite.Migrations
                     b.Navigation("Poster");
                 });
 
+            modelBuilder.Entity("GGinfoSite.Models.Comment", b =>
+                {
+                    b.HasOne("GGinfoSite.Models.BlogPost", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("BlogPostID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GGinfoSite.Models.AppUser", "Commenter")
+                        .WithMany()
+                        .HasForeignKey("CommenterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Commenter");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -317,6 +364,11 @@ namespace GGinfoSite.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GGinfoSite.Models.BlogPost", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }
