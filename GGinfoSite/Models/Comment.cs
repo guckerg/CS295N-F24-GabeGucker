@@ -14,7 +14,6 @@ namespace GGinfoSite.Models
         public int BlogPostID { get; set; }
 
         [Required]
-        [MaxLength(100)]
         public string CommentText { get; set; }
 
         [Required]
