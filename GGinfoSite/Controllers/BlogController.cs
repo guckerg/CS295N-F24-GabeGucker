@@ -25,10 +25,8 @@ namespace GGinfoSite.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var blogPosts = await repo.GetBlogPostsQuery()
-                                      .Include(bp => bp.Comments)
-                                        .ThenInclude(c => c.Commenter)
-                                      .ToListAsync();
+            var blogPosts = await repo.GetBlogPostsQuery().Include(bp => bp.Comments)
+                .ThenInclude(c => c.Commenter).ToListAsync();
             return View(blogPosts);
         }
 
@@ -78,29 +76,29 @@ namespace GGinfoSite.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateBlogPostAsync(BlogPost model)
         {
             model.Poster = await userManager.GetUserAsync(User);
             model.PostTime = DateTime.Now;
 
             await repo.AddBlogPostAsync(model);
-            return View(model);
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteCommentAsync(int id)
-        {
-            await repo.DeleteCommentAsync(id);
             return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteBlogPostAsync(int id)
+        public IActionResult DeleteComment(int commentID)
         {
-            await repo.DeleteBlogPostAsync(id);
+            repo.DeleteComment(commentID);
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteBlogPost(int blogPostID)
+        {
+            repo.DeleteBlogPost(blogPostID);
             return RedirectToAction("Index");
         }
     }

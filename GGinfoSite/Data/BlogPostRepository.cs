@@ -1,4 +1,5 @@
 ﻿using GGinfoSite.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GGinfoSite.Data
@@ -42,11 +43,18 @@ namespace GGinfoSite.Data
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteBlogPostAsync(int id)
+        public int DeleteBlogPost(int blogPostID)
         {
-            var targetBlogPost = await _context.BlogPosts.FindAsync(id);
+            var targetBlogPost = _context.BlogPosts.Find(blogPostID);
+            if(targetBlogPost.Comments != null && targetBlogPost.Comments.Count > 0)
+            {
+                foreach(var comment in targetBlogPost.Comments)
+                {
+                    _context.Comments.Remove(comment);
+                }
+            }
             _context.BlogPosts.Remove(targetBlogPost);
-            return await _context.SaveChangesAsync();
+            return _context.SaveChanges();
         }
         #endregion
 
@@ -81,11 +89,11 @@ namespace GGinfoSite.Data
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteCommentAsync(int id)
+        public int DeleteComment(int commentID)
         {
-            var targetComment = await _context.Comments.FindAsync(id);
+            var targetComment = _context.Comments.Find(commentID);
             _context.Comments.Remove(targetComment);
-            return await _context.SaveChangesAsync();
+            return _context.SaveChanges();
         }
         #endregion
     }

@@ -1,4 +1,5 @@
 ﻿using GGinfoSite.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GGinfoSite.Data
 {
@@ -9,13 +10,13 @@ namespace GGinfoSite.Data
         public Task<BlogPost> GetBlogPostByIdAsync(int id);
         public Task AddBlogPostAsync(BlogPost model);
         public Task UpdateBlogPostAsync(BlogPost model);
-        public Task<int> DeleteBlogPostAsync(int id);
+        public int DeleteBlogPost(int blogPostID);
 
         //Comments
         public Task<List<Comment>> GetCommentsAsync();
         public Task<Comment> GetCommentByIdAsync(int id);
         public Task StoreCommentAsync(Comment model);
         public Task UpdateCommentAsync(Comment comment);
-        public Task<int> DeleteCommentAsync(int id);
+        public int DeleteComment(int commentID);
     }
 }
