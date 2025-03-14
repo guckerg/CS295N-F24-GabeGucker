@@ -57,8 +57,14 @@ namespace GGinfoSite.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Comment(CommentVM commentVM)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Comment", commentVM);
+            }
+
             //extract comment from VM
             var comment = new Comment { CommentText = commentVM.CommentText, BlogPostID = commentVM.BlogPostID }; 
             comment.Commenter = userManager.GetUserAsync(User).Result;
@@ -79,6 +85,11 @@ namespace GGinfoSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateBlogPostAsync(BlogPost model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("BlogPost", model);
+            }
+
             model.Poster = await userManager.GetUserAsync(User);
             model.PostTime = DateTime.Now;
 

@@ -14,13 +14,15 @@
     <div class="row mb-md-3">
         <label for="title" class="control-label col-md-2">Post Title</label>
         <div class="col-md-10">
+            <span asp-validation-for="PostTitle" class="text-danger"></span>
             <input id="title" name="PostTitle" class="form-control col-md-10" /><br />
         </div>
     </div>
 
     <div class="row mb-md-3">
-        <label for="text" class="control-label col-md-2">Post Content</label>
+        <label for="text" class="control-label col-md-2">Post Text</label>
         <div class="col-md-10">
+            <span asp-validation-for="PostText" class="text-danger"></span>
             <textarea id="text" name="PostText" class="form-control"></textarea><br />
         </div>
 
@@ -29,6 +31,7 @@
     <div class="row mb-md-3">
         <label for="rating" class="control-label col-md-2">Rating</label>
         <div class="col-md-10">
+            <span asp-validation-for="PostRating" class="text-danger"></span>
             <input id="rating" name="PostRating" class="form-control col-md-8" /><br />
         </div>
     </div>
